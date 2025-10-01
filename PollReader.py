@@ -106,6 +106,7 @@ class PollReader():
     
 
     def polling_history_change(self):
+        for ha
         """
         Calculate the change in polling averages between the earliest and latest polls.
 
