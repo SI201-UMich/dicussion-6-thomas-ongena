@@ -55,19 +55,29 @@ class PollReader():
         """
 
         # iterate through each row of the data
-        for i in self.raw_data:
+        for i in self.raw_data[1:]:
 
             # split up the row by column
             seperated = i.split(',')
 
             # map each part of the row to the correct column
             self.data_dict['month'].append(seperated[0])
-            self.data_dict['date'].append(seperated[1])
-            self.data_dict['sample'].append(seperated[2])
-            self.data_dict['Harris result'].append(seperated[3])
-            self.data_dict['Trump result'].append(seperated[4])
+            self.data_dict['date'].append(int(seperated[1]))
+            self.data_dict['sample'].append(int(seperated[2].split(" ")[0]))
+            self.data_dict['sample type'].append(seperated[2].split(" ")[1])
+            self.data_dict['Harris result'].append(float(seperated[3]))
+            self.data_dict['Trump result'].append(float(seperated[4]))
 
     def highest_polling_candidate(self):
+        highest_harris = max(self.data_dict['Harris Result'])
+        highest_trump = max(self.data_dict['Trump Result'])
+
+        if highest_harris > highest_trump: 
+            return f"Harris {highest_harris*100:.1f}%"
+        elif highest_trump > highest_harris: 
+            return f"Trump {highest_trump*100:.1f}%"
+        else: 
+            return f"EVEN {highest_harris*100:.1f}%"
         
         """
         This method should iterate through the result columns and return
